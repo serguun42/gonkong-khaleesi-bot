@@ -4,7 +4,7 @@ Comment bot for Gonkong platform to mock users. Based on [Khaleesi-JS](https://g
 
 ## Config
 
-See [config.d.ts](./types/config.d.ts) for type definitions of all parameters with comments, then edit an example [tokens.json](./config/tokens.json).
+See [configs.d.ts](./types/configs.d.ts) for type definitions of all parameters with comments, then edit an example [tokens.json](./config/tokens.json).
 
 ## Commands
 

@@ -1,10 +1,9 @@
 export type ConfigName = 'tokens' | 'urls';
 
 export type TokensConfig = {
-  user_id: number;
-  xsrf_token_cookie: string;
-  x_user_cookie: string;
-  session_cookie: string;
+  BOT_USER_ID: number;
+  CSRF: string;
+  X_USER: string;
 };
 
 export type UrlsConfig = {

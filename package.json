@@ -1,0 +1,36 @@
+{
+  "name": "gonkong-khaleesi-bot",
+  "version": "0.0.1",
+  "description": "Khaleesi comment bot for Gonkong platform",
+  "main": "gonkong-khaleesi-bot.js",
+  "type": "module",
+  "scripts": {
+    "production": "pm2 start config/pm2.production.json",
+    "dev": "nodemon gonkong-khaleesi-bot.js --config config/nodemon.dev.json",
+    "lint": "eslint . --ext .js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
+  },
+  "homepage": "https://github.com/serguun42/gonkong-khaleesi-bot",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/serguun42/gonkong-khaleesi-bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/serguun42/gonkong-khaleesi-bot/issues"
+  },
+  "keywords": [],
+  "author": "serguun42",
+  "license": "BSL-1.0",
+  "dependencies": {
+    "khaleesi-js": "github:serguun42/Khaleesi-JS",
+    "node-fetch": "^3.3.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.37.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.8.7",
+    "typescript": "^5.0.2"
+  }
+}

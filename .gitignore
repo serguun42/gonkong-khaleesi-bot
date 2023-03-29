@@ -1,0 +1,11 @@
+.vscode/
+package-lock.json
+node_modules/
+out/
+pg.js
+serguun42 Comments Bot Logo.jpg
+
+*.dev.json
+!nodemon.dev.json
+*.bat
+*.sh

@@ -1,4 +1,4 @@
-import { CreatedComment, CreatingCommentPayload } from './creating-comment';
+import { Comment, CreatingCommentPayload } from './comment';
 import { Notification } from './notification';
 
 export type UsedHTTPMethods = 'GET' | 'POST';
@@ -14,9 +14,10 @@ type PostMethod<Payload, Response> = GeneralMethod<'POST', Payload, Response>;
 
 export type APIEndpoints = {
   notifications: GetMethod<Notification[]>;
+  'notifications/read': PostMethod<{}, { success: boolean }>;
   [key: `posts/${number}/comments`]:
-    | GetMethod<CreatedComment[]>
-    | PostMethod<CreatingCommentPayload, CreatedComment>;
+    | GetMethod<CommentsList>
+    | PostMethod<CreatingCommentPayload, Comment>;
 };
 
 export type MakeRequest = <Endpoint extends keyof APIEndpoints, Method extends APIEndpoints[Endpoint]['method']>(

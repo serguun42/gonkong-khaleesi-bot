@@ -1,7 +1,7 @@
 export type Notification = {
   /** UUID of notification */
   id: string;
-  type: 'user_mentioned' | 'etc.';
+  type: 'user_mentioned' | 'etc...';
   /** ISO 8601 format */
   date: string;
   data: {

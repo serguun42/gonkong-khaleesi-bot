@@ -1,3 +1,19 @@
+export type Author = {
+  id: number;
+  name: string;
+  description: string;
+  ava: string;
+  cover: string;
+  url: string;
+  subscribers_count: any;
+  is_active: boolean;
+  is_verified: boolean;
+  is_bot: boolean;
+  subscribed: boolean;
+  ban: any;
+  adult_content: boolean;
+};
+
 export type Comment = {
   id: number;
   user_id: number;
@@ -24,18 +40,29 @@ export type Comment = {
   item_type: string;
 };
 
-export type Author = {
-  id: number;
-  name: string;
-  description: string;
-  ava: string;
-  cover: string;
-  url: string;
-  subscribers_count: any;
-  is_active: boolean;
-  is_verified: boolean;
-  is_bot: boolean;
-  subscribed: boolean;
-  ban: any;
-  adult_content: boolean;
+export type CommentsList = {
+  [parentCommentId: number]: Comment[];
+};
+
+export type TriggerComment = {
+  post_id: number;
+  comment_id: number;
+  text: string;
+};
+
+export type CreatingCommentPayload = {
+  /** Source/replying to comment id */
+  parent_id: number;
+  /** Sending text */
+  body: string;
+  /** @constant */
+  images: [];
+};
+
+export type CreatingComment = {
+  postId: number;
+  /** Source/replying to comment id */
+  sourceCommentId: number;
+  /** Sending text */
+  text: string;
 };

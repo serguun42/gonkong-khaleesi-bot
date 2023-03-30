@@ -40,14 +40,14 @@ export type Comment = {
   item_type: string;
 };
 
-export type CommentsList = {
+export type CommentsBranchedList = {
   [parentCommentId: number]: Comment[];
 };
 
 export type TriggerComment = {
-  post_id: number;
-  comment_id: number;
-  text: string;
+  postId: number;
+  targetCommentId: number;
+  replyText: string;
 };
 
 export type CreatingCommentPayload = {
@@ -62,7 +62,7 @@ export type CreatingCommentPayload = {
 export type CreatingComment = {
   postId: number;
   /** Source/replying to comment id */
-  sourceCommentId: number;
+  targetCommentId: number;
   /** Sending text */
   text: string;
 };

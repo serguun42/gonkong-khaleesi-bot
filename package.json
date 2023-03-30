@@ -1,6 +1,6 @@
 {
   "name": "gonkong-khaleesi-bot",
-  "version": "0.1.0",
+  "version": "0.9.9",
   "description": "Khaleesi comment bot for Gonkong platform",
   "main": "gonkong-khaleesi-bot.js",
   "type": "module",

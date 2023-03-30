@@ -8,7 +8,7 @@ export const SendComment = (creatingComment) => {
   if (!creatingComment) return Promise.reject(new Error('No <creatingComment>'));
 
   /** @type {Array<keyof import('../types/comment').CreatingComment>} */
-  const creatingCommentProps = ['postId', 'sourceCommentId', 'text'];
+  const creatingCommentProps = ['postId', 'targetCommentId', 'text'];
   // eslint-disable-next-line no-restricted-syntax
   for (const key of creatingCommentProps) {
     if (!creatingComment[key]) {
@@ -17,7 +17,7 @@ export const SendComment = (creatingComment) => {
   }
 
   return MakeRequest(`posts/${creatingComment.postId}/comments`, 'POST', {
-    parent_id: creatingComment.sourceCommentId,
+    parent_id: creatingComment.targetCommentId,
     body: creatingComment.text,
     images: [],
   }).then((createdComment) => {
@@ -30,7 +30,7 @@ export const SendComment = (creatingComment) => {
 
 /**
  * @param {number} postId
- * @returns {Promise<import('../types/comment').CommentsList>}
+ * @returns {Promise<import('../types/comment').CommentsBranchedList>}
  */
 export const ListComments = (postId) =>
   postId ? MakeRequest(`posts/${postId}/comments`, 'GET') : Promise.reject(new Error('No <postId>'));

@@ -1,3 +1,4 @@
+import APIError from '../api/api-error.js';
 import LogMessageOrError from './log.js';
 
 const DEFAULT_DELAY_MS = 500;
@@ -29,7 +30,11 @@ const Delay = (action, delaySize, recursionLevel = 0) => {
   return Wait(delaySize * DEFAULT_DELAY_MS)
     .then(() => action())
     .catch((e) => {
-      LogMessageOrError(`Error ${e} in queue. Action: ${action}`);
+      if (e instanceof APIError) {
+        if (e.status === 403 || e.status === 404) return Promise.reject(e);
+      }
+
+      LogMessageOrError(new Error(`Error ${e} in queue`));
       return Delay(action, 10, recursionLevel + 1);
     });
 };

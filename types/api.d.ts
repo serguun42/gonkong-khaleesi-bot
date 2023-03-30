@@ -16,7 +16,7 @@ export type APIEndpoints = {
   notifications: GetMethod<Notification[]>;
   'notifications/read': PostMethod<{}, { success: boolean }>;
   [key: `posts/${number}/comments`]:
-    | GetMethod<CommentsList>
+    | GetMethod<CommentsBranchedList>
     | PostMethod<CreatingCommentPayload, Comment>;
 };
 

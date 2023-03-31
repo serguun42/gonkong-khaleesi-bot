@@ -31,3 +31,8 @@ export type Notification = {
   message: string;
   url: string;
 };
+
+/**
+ * Key – post ID, value – comments IDs in this post with mentions
+ */
+export type PostsWithMentionComments = Map<number, number[]>;

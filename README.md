@@ -1,10 +1,10 @@
 # Gonkong Khaleesi bot
 
-Comment bot for Gonkong platform to mock users. Based on [Khaleesi-JS](https://github.com/serguun42/Khaleesi-JS).
+Comment bot for Gonkong platform to mock users. Based on [Khaleesi-JS](https://github.com/serguun42/Khaleesi-JS). Should be triggered by webhook to check mentioning comments and then send replies.
 
 ## Config
 
-See [configs.d.ts](./types/configs.d.ts) for type definitions of all parameters with comments, then edit an example [tokens.json](./config/tokens.json).
+See [configs.d.ts](./types/configs.d.ts) for type definitions of all parameters with comments, then edit an examples of [tokens.json](./config/tokens.json) and [urls.json](./config/urls.json).
 
 ## Commands
 

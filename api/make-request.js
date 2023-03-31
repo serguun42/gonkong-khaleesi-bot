@@ -1,5 +1,6 @@
 import fetch from 'node-fetch';
 import { LoadTokensConfig, LoadUrlsConfig } from '../util/load-configs.js';
+import LogMessageOrError from '../util/log.js';
 import APIError from './api-error.js';
 
 const { X_USER, CSRF } = LoadTokensConfig();
@@ -24,10 +25,17 @@ const MakeRequest = (endpoint, method = 'GET', payload = null) => {
     },
     body: payload ? JSON.stringify(payload) : null,
     method,
-  }).then((res) => {
-    if (!res.ok) return Promise.reject(new APIError(res, payload));
+  }).then((serverResponse) => {
+    if (!serverResponse.ok)
+      return serverResponse.text().then(
+        (textResponse) => Promise.reject(new APIError(serverResponse, textResponse, payload)),
+        (textResponseReadError) => {
+          LogMessageOrError(textResponseReadError);
+          return Promise.reject(new APIError(serverResponse, '<unknown>', payload));
+        }
+      );
 
-    return res.json().then((json) => Promise.resolve(json?.data || json));
+    return serverResponse.json().then((json) => Promise.resolve(json?.data || json));
   });
 };
 

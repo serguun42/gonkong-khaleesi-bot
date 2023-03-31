@@ -1,5 +1,5 @@
 import http from 'node:http';
-import CheckAndSend from './core/check-and-send.js';
+import CoreAction from './core/index.js';
 import { LoadUrlsConfig } from './util/load-configs.js';
 
 const { WEBHOOK_SERVER_PORT, WEBHOOK_SERVER_PASS } = LoadUrlsConfig();
@@ -12,7 +12,7 @@ http
       return;
     }
 
-    CheckAndSend();
+    CoreAction();
     res.statusCode = 200;
     res.end('200 OK');
   })

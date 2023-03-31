@@ -1,20 +1,22 @@
 class APIError extends Error {
   /**
-   * @param {Response} res
+   * @param {Response} serverResponse
+   * @param {string} textResponse
    * @param {any} payload
    */
-  constructor(res, payload) {
-    super(`APIError. Response status ${res.status} ${res.statusText} on [${res.url}]`);
-    this.status = res.status;
-    this.statusText = res.statusText;
-    this.url = res.url;
+  constructor(serverResponse, textResponse, payload) {
+    super(`APIError. Response status ${serverResponse.status} ${serverResponse.statusText} on [${serverResponse.url}]`);
+    this.status = serverResponse.status;
+    this.statusText = serverResponse.statusText;
+    this.url = serverResponse.url;
+    this.textResponse = textResponse;
     this.payload = payload;
   }
 
   toString() {
-    return `APIError. Response status ${this.status} ${this.statusText} on [${this.url}]${
-      this.payload ? `\nPayload: ${JSON.stringify(this.payload, null, 2)}` : ''
-    }`;
+    return `APIError.\n\tResponse status ${this.status} ${this.statusText} on [${this.url}]\n\tResponse text: ${
+      this.textResponse
+    }${this.payload ? `\n\tPayload: ${JSON.stringify(this.payload, null, 2)}` : ''}`;
   }
 }
 

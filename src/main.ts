@@ -1,5 +1,5 @@
 import http from 'node:http';
-import CoreAction from './core/index.js';
+import CoreAction from './core-action.js';
 import { LoadUrlsConfig } from './util/load-configs.js';
 
 const { WEBHOOK_SERVER_PORT, WEBHOOK_SERVER_PASS } = LoadUrlsConfig();

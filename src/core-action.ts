@@ -1,24 +1,20 @@
-import Khaleesi from 'khaleesi-js';
-import { ListComments, SendComment } from '../api/comments.js';
-import { ListNotifications, ReadNotifications } from '../api/notifications.js';
-import Delay from '../util/delay.js';
-import LogMessageOrError from '../util/log.js';
-import TrimText from '../util/trim-text.js';
+import Khaleesi from '@serguun42/khaleesi-js';
+import { ListComments, SendComment } from './api/comments.js';
+import { ListNotifications, ReadNotifications } from './api/notifications.js';
+import { CreatingComment } from './types/comment.js';
+import { PostsWithMentionComments } from './types/notification.js';
+import Delay from './util/delay.js';
+import LogMessageOrError from './util/log.js';
+import TrimText from './util/trim-text.js';
 
-/**
- * @returns {Promise<import('../types/notification').PostsWithMentionComments>}
- */
-const CheckMentionCommentsByPosts = () =>
-  ListNotifications().then((allNotifications) => {
+function CheckMentionCommentsByPosts(): Promise<PostsWithMentionComments> {
+  return ListNotifications().then((allNotifications) => {
     const unreadMentions = allNotifications.filter(
       (notification) => !notification.read && notification.type === 'user_mentioned'
     );
 
-    /**
-     * Post with comments id to check
-     * @type {Map<number, number[]>}
-     */
-    const postsWithComments = new Map();
+    /** Post with comments id to check */
+    const postsWithComments: PostsWithMentionComments = new Map();
 
     unreadMentions.forEach((notification) => {
       const postId = notification.data?.post?.id;
@@ -31,19 +27,15 @@ const CheckMentionCommentsByPosts = () =>
 
     return Delay(ReadNotifications).then(() => Promise.resolve(postsWithComments));
   });
+}
 
-/**
- * @param {import('../types/notification').PostsWithMentionComments} postsWithComments
- * @returns {Promise<import('../types/comment').CreatingComment[][]>}
- */
-const PrepareReplyingComments = (postsWithComments) =>
+const PrepareReplyingComments = (postsWithComments: PostsWithMentionComments): Promise<CreatingComment[][]> =>
   Promise.all(
     Array.from(postsWithComments).map(([postId, commentsIds], postIndex) =>
       Delay(() => ListComments(postId), postIndex)
         .then((commentsBranchedList) => {
           const comments = Object.values(commentsBranchedList).flat();
-          /** @type {import('../types/comment').CreatingComment[]} */
-          const replyingComments = [];
+          const replyingComments: CreatingComment[] = [];
 
           comments.forEach((comment) => {
             if (!commentsIds.includes(comment.id)) return;
@@ -72,22 +64,17 @@ const PrepareReplyingComments = (postsWithComments) =>
             }
           });
 
-          return replyingComments;
+          return Promise.resolve(replyingComments);
         })
         .catch((e) => {
           LogMessageOrError(`Cannot get comments list from post ${postId}`, e);
-          return Promise.resolve();
+          return Promise.resolve([]);
         })
     )
   );
 
-/**
- *
- * @param {import('../types/comment').CreatingComment[][]} replyingComments
- * @returns {Promise<void[]>}
- */
-const ReplyWithValidComments = (replyingComments) => {
-  if (!replyingComments?.length) return Promise.resolve();
+function ReplyWithValidComments(replyingComments: CreatingComment[][]): Promise<void[]> {
+  if (!replyingComments?.length) return Promise.resolve([]);
 
   const validComments = replyingComments
     .flat()
@@ -97,10 +84,8 @@ const ReplyWithValidComments = (replyingComments) => {
   return Promise.all(
     validComments.map((validComment, commentIndex) => Delay(() => SendComment(validComment), commentIndex))
   );
-};
+}
 
-const CoreAction = () => {
+export default function CoreAction() {
   CheckMentionCommentsByPosts().then(PrepareReplyingComments).then(ReplyWithValidComments).catch(LogMessageOrError);
-};
-
-export default CoreAction;
+}

@@ -2,8 +2,7 @@
 package-lock.json
 node_modules/
 out/
-pg.js
-serguun42 Comments Bot Logo.jpg
+dist/
 
 *.dev.json
 !nodemon.dev.json

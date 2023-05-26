@@ -3,27 +3,14 @@ import LogMessageOrError from './log.js';
 
 const DEFAULT_DELAY_MS = 500;
 
-/**
- * @param {number} delay
- * @returns {Promise}
- */
-const Wait = (delay = DEFAULT_DELAY_MS) =>
+const Wait = (delay: number = DEFAULT_DELAY_MS): Promise<void> =>
   new Promise((resolve) => {
     setTimeout(resolve, delay);
   });
 
-/**
- * @template T
- * @typedef {() => Promise<T>} Action<T>
- */
-/**
- * @template T
- * @param {Action<T>} action
- * @param {number} [delay]
- * @param {number} [recursionLevel]
- * @returns {Promise<T>}
- */
-const Delay = (action, delaySize, recursionLevel = 0) => {
+type Action<T> = () => Promise<T>;
+
+export default function Delay<T>(action: Action<T>, delaySize = 1, recursionLevel = 0): Promise<T> {
   if (recursionLevel > 3)
     return Promise.reject(new Error(`Too deep recursion when handling queue's error. Action: ${action}`));
 
@@ -37,6 +24,4 @@ const Delay = (action, delaySize, recursionLevel = 0) => {
       LogMessageOrError(new Error(`Error ${e} in queue`));
       return Delay(action, 10, recursionLevel + 1);
     });
-};
-
-export default Delay;
+}

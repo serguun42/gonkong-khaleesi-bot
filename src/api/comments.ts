@@ -1,14 +1,10 @@
+import { CreatingComment } from '../types/comment.js';
 import MakeRequest from './make-request.js';
 
-/**
- * @param {import('../types/comment').CreatingComment} creatingComment
- * @returns {void}
- */
-export const SendComment = (creatingComment) => {
+export function SendComment(creatingComment: CreatingComment) {
   if (!creatingComment) return Promise.reject(new Error('No <creatingComment>'));
 
-  /** @type {Array<keyof import('../types/comment').CreatingComment>} */
-  const creatingCommentProps = ['postId', 'targetCommentId', 'text'];
+  const creatingCommentProps: Array<keyof CreatingComment> = ['postId', 'targetCommentId', 'text'];
   // eslint-disable-next-line no-restricted-syntax
   for (const key of creatingCommentProps) {
     if (!creatingComment[key]) {
@@ -26,11 +22,10 @@ export const SendComment = (creatingComment) => {
 
     return Promise.resolve();
   });
-};
+}
 
-/**
- * @param {number} postId
- * @returns {Promise<import('../types/comment').CommentsBranchedList>}
- */
-export const ListComments = (postId) =>
-  postId ? MakeRequest(`posts/${postId}/comments`, 'GET') : Promise.reject(new Error('No <postId>'));
+export function ListComments(postId: number) {
+  if (!postId) return Promise.reject(new Error('No <postId>'));
+
+  return MakeRequest(`posts/${postId}/comments`, 'GET');
+}

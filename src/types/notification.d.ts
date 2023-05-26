@@ -11,7 +11,7 @@ export type Notification = {
     message: string;
     /** `Пользователь *** упомянул вас {} {}` */
     group_message: string;
-    item_type: any;
+    item_type: unknown;
     user: {
       id: number;
       name: string;
@@ -25,14 +25,12 @@ export type Notification = {
       id: number;
       url: string;
     };
-    rate: any;
+    rate: unknown;
   };
   read: boolean;
   message: string;
   url: string;
 };
 
-/**
- * Key – post ID, value – comments IDs in this post with mentions
- */
+/** Key – post ID, value – comments IDs in this post with mentions */
 export type PostsWithMentionComments = Map<number, number[]>;

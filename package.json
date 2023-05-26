@@ -1,13 +1,14 @@
 {
   "name": "gonkong-khaleesi-bot",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Khaleesi comment bot for Gonkong platform",
-  "main": "gonkong-khaleesi-bot.js",
+  "main": "src/main.ts",
   "type": "module",
   "scripts": {
-    "production": "pm2 start config/pm2.production.json",
-    "dev": "nodemon gonkong-khaleesi-bot.js --config config/nodemon.dev.json",
-    "lint": "eslint . --ext .js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
+    "dev": "nodemon src/main.ts --config config/nodemon.dev.json",
+    "lint": "eslint . --ext .ts,.js,.cjs,.mjs --fix --ignore-path .gitignore",
+    "compile": "tsc --project tsconfig.json",
+    "production": "pm2 start config/pm2.production.json"
   },
   "homepage": "https://github.com/serguun42/gonkong-khaleesi-bot",
   "repository": {
@@ -23,16 +24,23 @@
   "author": "serguun42",
   "license": "BSL-1.0",
   "dependencies": {
-    "khaleesi-js": "github:serguun42/Khaleesi-JS",
-    "node-fetch": "^3.3.1"
+    "@serguun42/khaleesi-js": "^3.0.1",
+    "@types/node": "^20.2.5",
+    "node-fetch": "^3.3.1",
+    "pm2": "^5.3.0",
+    "typescript": "^5.0.4"
   },
   "devDependencies": {
-    "eslint": "^8.37.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.7",
+    "@typescript-eslint/parser": "^5.59.7",
+    "eslint": "^8.41.0",
     "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-prettier": "^4.2.1",
-    "prettier": "^2.8.7",
-    "typescript": "^5.0.2"
+    "nodemon": "^2.0.22",
+    "prettier": "^2.8.8",
+    "ts-node": "^10.9.1"
   }
 }

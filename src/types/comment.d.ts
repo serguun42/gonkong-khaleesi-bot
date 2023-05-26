@@ -5,12 +5,12 @@ export type Author = {
   ava: string;
   cover: string;
   url: string;
-  subscribers_count: any;
+  subscribers_count: unknown;
   is_active: boolean;
   is_verified: boolean;
   is_bot: boolean;
   subscribed: boolean;
-  ban: any;
+  ban: unknown;
   adult_content: boolean;
 };
 
@@ -22,16 +22,16 @@ export type Comment = {
   body: string;
   body_raw: string;
   body_short: string;
-  images: any[];
+  images: unknown[];
   date: string;
   is_pinned: boolean;
   is_blacklisted: boolean;
   rate: number;
   url: string;
   voted: number;
-  media: any[];
+  media: unknown[];
   author: Author;
-  is_edited: any;
+  is_edited: unknown;
   is_deleted: boolean;
   disable_rating: boolean;
   can_edit: boolean;

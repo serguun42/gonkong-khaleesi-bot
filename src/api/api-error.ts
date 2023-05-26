@@ -1,10 +1,15 @@
 class APIError extends Error {
-  /**
-   * @param {Response} serverResponse
-   * @param {string} textResponse
-   * @param {any} payload
-   */
-  constructor(serverResponse, textResponse, payload) {
+  status: number;
+
+  statusText: string;
+
+  url: string;
+
+  textResponse: string;
+
+  payload: unknown;
+
+  constructor(serverResponse: import('node-fetch').Response, textResponse: string, payload: unknown) {
     super(`APIError. Response status ${serverResponse.status} ${serverResponse.statusText} on [${serverResponse.url}]`);
     this.status = serverResponse.status;
     this.statusText = serverResponse.statusText;
